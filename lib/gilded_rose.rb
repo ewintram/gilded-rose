@@ -1,61 +1,71 @@
 class GildedRose
 
+  MINIMUM_QUALITY = 0
+  MAXIMUM_QUALITY = 50
+  SELL_IN_DAYS = 0
+
   def initialize(items)
     @items = items
   end
 
   def update_quality()
     @items.each do |item|
-      if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-        if item.quality > 0
-          if item.name != "Sulfuras, Hand of Ragnaros"
-            item.quality = item.quality - 1
-          end
-        end
+      if item.name == "Sulfuras, Hand of Ragnaros"
+        return
       else
-        if item.quality < 50
-          item.quality = item.quality + 1
-          if item.name == "Backstage passes to a TAFKAL80ETC concert"
-            if item.sell_in < 11
-              if item.quality < 50
-                item.quality = item.quality + 1
+        if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
+          if item.quality > MINIMUM_QUALITY
+              reduce_quality_by_1(item)
+          end
+        else
+          if item.quality < MAXIMUM_QUALITY
+            increase_quality_by_1(item)
+            if item.name == "Backstage passes to a TAFKAL80ETC concert"
+              if item.sell_in < 11
+                if item.quality < MAXIMUM_QUALITY
+                  increase_quality_by_1(item)
+                end
               end
-            end
-            if item.sell_in < 6
-              if item.quality < 50
-                item.quality = item.quality + 1
+              if item.sell_in < 6
+                if item.quality < MAXIMUM_QUALITY
+                  increase_quality_by_1(item)
+                end
               end
             end
           end
         end
-      end
 
       sell_in(item)
 
-      if item.sell_in < 0
+      if item.sell_in < SELL_IN_DAYS
         if item.name != "Aged Brie"
           if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > 0
-              if item.name != "Sulfuras, Hand of Ragnaros"
-                item.quality = item.quality - 1
-              end
+            if item.quality > MINIMUM_QUALITY
+                reduce_quality_by_1(item)
             end
           else
             item.quality = item.quality - item.quality
           end
         else
-          if item.quality < 50
-            item.quality = item.quality + 1
+          if item.quality < MAXIMUM_QUALITY
+            increase_quality_by_1(item)
           end
         end
       end
     end
   end
+  end
 
   def sell_in(item)
-    if item.name != "Sulfuras, Hand of Ragnaros"
-      item.sell_in -= 1
-    end
+    item.sell_in -= 1
+  end
+
+  def reduce_quality_by_1(item)
+    item.quality -= 1
+  end
+
+  def increase_quality_by_1(item)
+    item.quality += 1
   end
 end
 

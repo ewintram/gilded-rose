@@ -41,7 +41,7 @@ describe GildedRose do
     end
 
     describe "upgradable items" do
-      it "does not raise the quality above 50" do
+      it "does not increase the quality above 50" do
         aged_brie = [Item.new("Aged Brie", 1, 49)]
         gilded_rose = GildedRose.new(aged_brie)
         gilded_rose.update_quality
@@ -50,14 +50,14 @@ describe GildedRose do
       end
 
       describe "brie" do
-        it "raises the quality by 1 for brie before its sell in date" do
+        it "increases the quality by 1 for brie before its sell in date" do
           aged_brie = [Item.new("Aged Brie", 1, 49)]
           gilded_rose = GildedRose.new(aged_brie)
           gilded_rose.update_quality
           expect(aged_brie[0].quality).to eq 50
         end
 
-        it "raises the quality by 2 for brie after its sell in date" do
+        it "increases the quality by 2 for brie after its sell in date" do
           aged_brie = [Item.new("Aged Brie", 0, 1)]
           gilded_rose = GildedRose.new(aged_brie)
           gilded_rose.update_quality
@@ -66,14 +66,14 @@ describe GildedRose do
       end
 
       describe "backstage passes" do
-        it "raises the quality by 2 within 10 or fewer days of the sell in date" do
+        it "increases the quality by 2 within 10 or fewer days of the sell in date" do
           backstage_passes = [Item.new("Backstage passes to a TAFKAL80ETC concert", 10, 1)]
           gilded_rose = GildedRose.new(backstage_passes)
           gilded_rose.update_quality
           expect(backstage_passes[0].quality).to eq 3
         end
 
-        it "raises the quality by 3 within 5 or fewer days of the sell in date" do
+        it "increases the quality by 3 within 5 or fewer days of the sell in date" do
           backstage_passes = [Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 1)]
           gilded_rose = GildedRose.new(backstage_passes)
           gilded_rose.update_quality
