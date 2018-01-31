@@ -29,39 +29,35 @@ class GildedRose
   end
 
   def regular_item(item)
-    unless item.quality == MINIMUM_QUALITY
+    if item.quality > MINIMUM_QUALITY
       reduce_quality_by_1(item)
-      if item.sell_in < EXPIRED && item.quality > MINIMUM_QUALITY
-        reduce_quality_by_1(item)
-      end
+    end
+    if item.sell_in < EXPIRED && item.quality > MINIMUM_QUALITY
+      reduce_quality_by_1(item)
     end
   end
 
   def brie(item)
     if item.quality < MAXIMUM_QUALITY
       increase_quality_by_1(item)
-      if item.sell_in < EXPIRED && item.quality > MINIMUM_QUALITY
-        increase_quality_by_1(item)
-      end
+    end
+    if item.sell_in < EXPIRED && item.quality < MAXIMUM_QUALITY
+      increase_quality_by_1(item)
     end
   end
 
   def backstage_passes(item)
     if item.sell_in < EXPIRED
-      item.quality -= item.quality
+      item.quality = MINIMUM_QUALITY
     else
       if item.quality < MAXIMUM_QUALITY
         increase_quality_by_1(item)
       end
-      if item.sell_in < 11
-        if item.quality < MAXIMUM_QUALITY
-          increase_quality_by_1(item)
-        end
+      if item.sell_in < 11 && item.quality < MAXIMUM_QUALITY
+        increase_quality_by_1(item)
       end
-      if item.sell_in < 6
-        if item.quality < MAXIMUM_QUALITY
-          increase_quality_by_1(item)
-        end
+      if item.sell_in < 6 && item.quality < MAXIMUM_QUALITY
+        increase_quality_by_1(item)
       end
     end
   end
