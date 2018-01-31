@@ -29,6 +29,10 @@ class Sulfuras
   def update_quality
     return
   end
+
+  def to_s()
+    "#{@name}, #{@sell_in}, #{@quality}"
+  end
 end
 
 ###
@@ -55,6 +59,10 @@ class RegularItem
     if @sell_in < EXPIRED && @quality > MINIMUM_QUALITY
       @quality -= 1
     end
+  end
+
+  def to_s()
+    "#{@name}, #{@sell_in}, #{@quality}"
   end
 end
 
@@ -83,6 +91,10 @@ class UpgradableItem
       @quality += 1
     end
   end
+
+  def to_s()
+    "#{@name}, #{@sell_in}, #{@quality}"
+  end
 end
 
 ###
@@ -109,13 +121,17 @@ class BackstagePasses
       if @quality < MAXIMUM_QUALITY
         @quality += 1
       end
-      if @sell_in < 11 && @quality < MAXIMUM_QUALITY
+      if @sell_in < 10 && @quality < MAXIMUM_QUALITY
         @quality += 1
       end
-      if @sell_in < 6 && @quality < MAXIMUM_QUALITY
+      if @sell_in < 5 && @quality < MAXIMUM_QUALITY
         @quality += 1
       end
     end
+  end
+
+  def to_s()
+    "#{@name}, #{@sell_in}, #{@quality}"
   end
 end
 
