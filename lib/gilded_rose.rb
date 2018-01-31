@@ -18,40 +18,37 @@ class GildedRose
         when "Aged Brie"
           item.update_quality
         when "Backstage passes"
-          backstage_passes(item)
+          item.update_quality
       end
     end
   end
+end
 
-  def backstage_passes(item)
-    reduce_sell_in_by_1(item)
-    if item.sell_in < EXPIRED
-      item.quality = MINIMUM_QUALITY
-    else
-      if item.quality < MAXIMUM_QUALITY
-        increase_quality_by_1(item)
-      end
-      if item.sell_in < 11 && item.quality < MAXIMUM_QUALITY
-        increase_quality_by_1(item)
-      end
-      if item.sell_in < 6 && item.quality < MAXIMUM_QUALITY
-        increase_quality_by_1(item)
-      end
+###
+
+class RegularItem
+
+  MINIMUM_QUALITY = 0
+  MAXIMUM_QUALITY = 50
+  EXPIRED = 0
+
+  attr_accessor :name, :sell_in, :quality
+
+  def initialize(name, sell_in, quality)
+    @name = name
+    @sell_in = sell_in
+    @quality = quality
+  end
+
+  def update_quality
+    @sell_in -= 1
+    if @quality > MINIMUM_QUALITY
+      @quality -= 1
+    end
+    if @sell_in < EXPIRED && @quality > MINIMUM_QUALITY
+      @quality -= 1
     end
   end
-
-  def reduce_sell_in_by_1(item)
-    item.sell_in -= 1
-  end
-
-  def reduce_quality_by_1(item)
-    item.quality -= 1
-  end
-
-  def increase_quality_by_1(item)
-    item.quality += 1
-  end
-
 end
 
 ###
@@ -83,7 +80,7 @@ end
 
 ###
 
-class RegularItem
+class BackstagePasses
 
   MINIMUM_QUALITY = 0
   MAXIMUM_QUALITY = 50
@@ -99,11 +96,18 @@ class RegularItem
 
   def update_quality
     @sell_in -= 1
-    if @quality > MINIMUM_QUALITY
-      @quality -= 1
-    end
-    if @sell_in < EXPIRED && @quality > MINIMUM_QUALITY
-      @quality -= 1
+    if @sell_in < EXPIRED
+      @quality = MINIMUM_QUALITY
+    else
+      if @quality < MAXIMUM_QUALITY
+        @quality += 1
+      end
+      if @sell_in < 11 && @quality < MAXIMUM_QUALITY
+        @quality += 1
+      end
+      if @sell_in < 6 && @quality < MAXIMUM_QUALITY
+        @quality += 1
+      end
     end
   end
 end
