@@ -42,7 +42,7 @@ describe GildedRose do
 
     describe "upgradable items" do
       it "does not increase the quality above 50" do
-        aged_brie = [Item.new("Aged Brie", 1, 49)]
+        aged_brie = [UpgradableItem.new("Aged Brie", 1, 49)]
         gilded_rose = GildedRose.new(aged_brie)
         gilded_rose.update_quality
         gilded_rose.update_quality
@@ -51,14 +51,14 @@ describe GildedRose do
 
       describe "brie" do
         it "increases the quality by 1 for brie before its sell in date" do
-          aged_brie = [Item.new("Aged Brie", 1, 49)]
+          aged_brie = [UpgradableItem.new("Aged Brie", 1, 49)]
           gilded_rose = GildedRose.new(aged_brie)
           gilded_rose.update_quality
           expect(aged_brie[0].quality).to eq 50
         end
 
         it "increases the quality by 2 for brie after its sell in date" do
-          aged_brie = [Item.new("Aged Brie", 0, 1)]
+          aged_brie = [UpgradableItem.new("Aged Brie", 0, 1)]
           gilded_rose = GildedRose.new(aged_brie)
           gilded_rose.update_quality
           expect(aged_brie[0].quality).to eq 3

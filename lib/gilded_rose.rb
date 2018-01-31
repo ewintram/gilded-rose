@@ -16,20 +16,10 @@ class GildedRose
         when "foo"
           item.update_quality
         when "Aged Brie"
-          brie(item)
+          item.update_quality
         when "Backstage passes"
           backstage_passes(item)
       end
-    end
-  end
-
-  def brie(item)
-    reduce_sell_in_by_1(item)
-    if item.quality < MAXIMUM_QUALITY
-      increase_quality_by_1(item)
-    end
-    if item.sell_in < EXPIRED && item.quality < MAXIMUM_QUALITY
-      increase_quality_by_1(item)
     end
   end
 
@@ -66,8 +56,35 @@ end
 
 ###
 
+class UpgradableItem
+
+  MINIMUM_QUALITY = 0
+  MAXIMUM_QUALITY = 50
+  EXPIRED = 0
+
+  attr_accessor :name, :sell_in, :quality
+
+  def initialize(name, sell_in, quality)
+    @name = name
+    @sell_in = sell_in
+    @quality = quality
+  end
+
+  def update_quality
+    @sell_in -= 1
+    if @quality < MAXIMUM_QUALITY
+      @quality += 1
+    end
+    if @sell_in < EXPIRED && @quality < MAXIMUM_QUALITY
+      @quality += 1
+    end
+  end
+end
+
+###
+
 class RegularItem
-  
+
   MINIMUM_QUALITY = 0
   MAXIMUM_QUALITY = 50
   EXPIRED = 0
