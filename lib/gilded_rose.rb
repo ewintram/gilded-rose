@@ -12,21 +12,17 @@ class GildedRose
     @items.each do |item|
       if item.name == "Sulfuras, Hand of Ragnaros"
         return
-
       else
+
         reduce_sell_in_by_1(item)
 
-        # regular item
-        if item.name == "foo"
-          regular_item(item)
-        end
-        # brie
-        if item.name == "Aged Brie"
-          brie(item)
-        end
-        # backstage passes
-        if item.name == "Backstage passes to a TAFKAL80ETC concert"
-          backstage_passes(item)
+        case item.name
+          when "foo"
+            regular_item(item)
+          when "Aged Brie"
+            brie(item)
+          when "Backstage passes"
+            backstage_passes(item)
         end
       end
     end

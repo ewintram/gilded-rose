@@ -19,8 +19,7 @@ describe GildedRose do
         days = 3
         gilded_rose = GildedRose.new(items)
         (1..days).each do |day|
-          p gilded_rose.update_quality
-
+          gilded_rose.update_quality
         end
         expect(items[0].quality).to eq 0
       end
@@ -30,7 +29,6 @@ describe GildedRose do
       it "reduces the quality by 1 for regular items before their sell in date" do
         gilded_rose = GildedRose.new(items)
         gilded_rose.update_quality
-        p items[0]
         expect(items[0].quality).to eq 1
       end
 
@@ -69,21 +67,21 @@ describe GildedRose do
 
       describe "backstage passes" do
         it "increases the quality by 2 within 10 or fewer days of the sell in date" do
-          backstage_passes = [Item.new("Backstage passes to a TAFKAL80ETC concert", 10, 1)]
+          backstage_passes = [Item.new("Backstage passes", 10, 1)]
           gilded_rose = GildedRose.new(backstage_passes)
           gilded_rose.update_quality
           expect(backstage_passes[0].quality).to eq 3
         end
 
         it "increases the quality by 3 within 5 or fewer days of the sell in date" do
-          backstage_passes = [Item.new("Backstage passes to a TAFKAL80ETC concert", 5, 1)]
+          backstage_passes = [Item.new("Backstage passes", 5, 1)]
           gilded_rose = GildedRose.new(backstage_passes)
           gilded_rose.update_quality
           expect(backstage_passes[0].quality).to eq 4
         end
 
         it "reduces the quality to 0 after the sell in date" do
-          backstage_passes = [Item.new("Backstage passes to a TAFKAL80ETC concert", 0, 10)]
+          backstage_passes = [Item.new("Backstage passes", 0, 10)]
           gilded_rose = GildedRose.new(backstage_passes)
           gilded_rose.update_quality
           expect(backstage_passes[0].quality).to eq 0
