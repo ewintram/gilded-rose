@@ -19,7 +19,8 @@ describe GildedRose do
         days = 3
         gilded_rose = GildedRose.new(items)
         (1..days).each do |day|
-          gilded_rose.update_quality
+          p gilded_rose.update_quality
+
         end
         expect(items[0].quality).to eq 0
       end
@@ -29,6 +30,7 @@ describe GildedRose do
       it "reduces the quality by 1 for regular items before their sell in date" do
         gilded_rose = GildedRose.new(items)
         gilded_rose.update_quality
+        p items[0]
         expect(items[0].quality).to eq 1
       end
 

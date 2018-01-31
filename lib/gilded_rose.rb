@@ -2,7 +2,7 @@ class GildedRose
 
   MINIMUM_QUALITY = 0
   MAXIMUM_QUALITY = 50
-  SELL_IN_DAYS = 0
+  EXPIRED = 0
 
   def initialize(items)
     @items = items
@@ -12,51 +12,65 @@ class GildedRose
     @items.each do |item|
       if item.name == "Sulfuras, Hand of Ragnaros"
         return
+
       else
-        if item.name != "Aged Brie" and item.name != "Backstage passes to a TAFKAL80ETC concert"
-          if item.quality > MINIMUM_QUALITY
-              reduce_quality_by_1(item)
-          end
-        else
-          if item.quality < MAXIMUM_QUALITY
-            increase_quality_by_1(item)
-            if item.name == "Backstage passes to a TAFKAL80ETC concert"
-              if item.sell_in < 11
-                if item.quality < MAXIMUM_QUALITY
-                  increase_quality_by_1(item)
-                end
-              end
-              if item.sell_in < 6
-                if item.quality < MAXIMUM_QUALITY
-                  increase_quality_by_1(item)
-                end
-              end
-            end
-          end
+        reduce_sell_in_by_1(item)
+
+        # regular item
+        if item.name == "foo"
+          regular_item(item)
         end
-
-      sell_in(item)
-
-      if item.sell_in < SELL_IN_DAYS
-        if item.name != "Aged Brie"
-          if item.name != "Backstage passes to a TAFKAL80ETC concert"
-            if item.quality > MINIMUM_QUALITY
-                reduce_quality_by_1(item)
-            end
-          else
-            item.quality = item.quality - item.quality
-          end
-        else
-          if item.quality < MAXIMUM_QUALITY
-            increase_quality_by_1(item)
-          end
+        # brie
+        if item.name == "Aged Brie"
+          brie(item)
+        end
+        # backstage passes
+        if item.name == "Backstage passes to a TAFKAL80ETC concert"
+          backstage_passes(item)
         end
       end
     end
   end
+
+  def regular_item(item)
+    unless item.quality == MINIMUM_QUALITY
+      reduce_quality_by_1(item)
+      if item.sell_in < EXPIRED && item.quality > MINIMUM_QUALITY
+        reduce_quality_by_1(item)
+      end
+    end
   end
 
-  def sell_in(item)
+  def brie(item)
+    if item.quality < MAXIMUM_QUALITY
+      increase_quality_by_1(item)
+      if item.sell_in < EXPIRED && item.quality > MINIMUM_QUALITY
+        increase_quality_by_1(item)
+      end
+    end
+  end
+
+  def backstage_passes(item)
+    if item.sell_in < EXPIRED
+      item.quality -= item.quality
+    else
+      if item.quality < MAXIMUM_QUALITY
+        increase_quality_by_1(item)
+      end
+      if item.sell_in < 11
+        if item.quality < MAXIMUM_QUALITY
+          increase_quality_by_1(item)
+        end
+      end
+      if item.sell_in < 6
+        if item.quality < MAXIMUM_QUALITY
+          increase_quality_by_1(item)
+        end
+      end
+    end
+  end
+
+  def reduce_sell_in_by_1(item)
     item.sell_in -= 1
   end
 
