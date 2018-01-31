@@ -1,4 +1,5 @@
 require_relative 'backstage_passes'
+require_relative 'conjured'
 require_relative 'regular_item'
 require_relative 'sulfuras'
 require_relative 'upgradable_item'

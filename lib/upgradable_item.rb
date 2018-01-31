@@ -3,12 +3,12 @@ require_relative 'item'
 class UpgradableItem < Item
 
   def update_quality
-    @sell_in -= 1
-    if @quality < MAXIMUM_QUALITY
-      @quality += 1
+    reduce_sell_in_by_1
+    if quality_below_max?
+      icrease_quality_by_1
     end
-    if @sell_in < EXPIRED && @quality < MAXIMUM_QUALITY
-      @quality += 1
+    if expired? && quality_below_max?
+      icrease_quality_by_1
     end
   end
 end

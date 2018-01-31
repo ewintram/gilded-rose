@@ -12,14 +12,13 @@ items = [
   BackstagePasses.new(name="Backstage passes", sell_in=15, quality=20),
   BackstagePasses.new(name="Backstage passes", sell_in=10, quality=49),
   BackstagePasses.new(name="Backstage passes", sell_in=5, quality=49),
-  # This Conjured item does not work properly yet
-  # Item.new(name="Conjured Mana Cake", sell_in=3, quality=6), # <-- :O
+  Conjured.new(name="Conjured Mana Cake", sell_in=3, quality=6), # <-- :O
 ]
 
-days = 8
-# if ARGV.size > 0
-#   days = ARGV[0].to_i + 1
-# end
+days = 2
+if ARGV.size > 0
+  days = ARGV[0].to_i + 1
+end
 
 gilded_rose = GildedRose.new items
 (0...days).each do |day|

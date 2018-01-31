@@ -2,8 +2,9 @@ require File.join(File.dirname(__FILE__), '../lib/gilded_rose')
 
 describe GildedRose do
 
-  let(:items)                 { [RegularItem.new("foo", 1, 2)] }
-  let(:sulfuras)              { [Sulfuras.new("Sulfuras, Hand of Ragnaros", 0, 80)] }
+  let(:items)    { [RegularItem.new("foo", 1, 2)] }
+  let(:sulfuras) { [Sulfuras.new("Sulfuras, Hand of Ragnaros", 0, 80)] }
+  let(:conjured) { [Conjured.new("Conjured Mana Cake", 1, 6)] }
 
   describe "#update_quality" do
 
@@ -104,7 +105,18 @@ describe GildedRose do
     end
 
     describe "Conjured items" do
-      it "reduces the quality by "
+      it "reduces the quality by 2 for conjured items before their sell in date" do
+        gilded_rose = GildedRose.new(conjured)
+        gilded_rose.update_quality
+        expect(conjured[0].quality).to eq 4
+      end
+
+      it "reduces the quality by 4 for conjured items after their sell in date" do
+        gilded_rose = GildedRose.new(conjured)
+        gilded_rose.update_quality
+        gilded_rose.update_quality
+        expect(conjured[0].quality).to eq 0
+      end
     end
   end
 

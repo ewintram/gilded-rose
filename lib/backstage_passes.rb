@@ -3,18 +3,18 @@ require_relative 'item'
 class BackstagePasses < Item
 
   def update_quality
-    @sell_in -= 1
-    if @sell_in < EXPIRED
+    reduce_sell_in_by_1
+    if expired?
       @quality = MINIMUM_QUALITY
     else
-      if @quality < MAXIMUM_QUALITY
-        @quality += 1
+      if quality_below_max?
+        icrease_quality_by_1
       end
-      if @sell_in < 10 && @quality < MAXIMUM_QUALITY
-        @quality += 1
+      if @sell_in < 10 && quality_below_max?
+        icrease_quality_by_1
       end
-      if @sell_in < 5 && @quality < MAXIMUM_QUALITY
-        @quality += 1
+      if @sell_in < 5 && quality_below_max?
+        icrease_quality_by_1
       end
     end
   end
