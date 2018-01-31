@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '../lib/gilded_rose')
 
 describe GildedRose do
 
-  let(:items)                 { [Item.new("foo", 1, 2)] }
+  let(:items)                 { [RegularItem.new("foo", 1, 2)] }
   let(:sulfuras)              { [Item.new("Sulfuras, Hand of Ragnaros", 0, 80)] }
 
   describe "#update_quality" do
@@ -33,7 +33,7 @@ describe GildedRose do
       end
 
       it "reduces the quality by 2 for regular items after their sell in date" do
-        items = [Item.new("foo", 0, 2)]
+        items = [RegularItem.new("foo", 0, 2)]
         gilded_rose = GildedRose.new(items)
         gilded_rose.update_quality
         expect(items[0].quality).to eq 0
@@ -108,7 +108,7 @@ describe GildedRose do
     describe "regular items" do
       it "reduces the sell in date by 1 regular items" do
         days = 5
-        items = [Item.new("foo", 10, 0)]
+        items = [RegularItem.new("foo", 10, 0)]
         gilded_rose = GildedRose.new(items)
         (1..days).each do |day|
           gilded_rose.update_quality
