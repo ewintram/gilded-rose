@@ -102,6 +102,10 @@ describe GildedRose do
         expect(sulfuras[0].sell_in).to eq 0
       end
     end
+
+    describe "Conjured items" do
+      it "reduces the quality by "
+    end
   end
 
   describe "sell in date" do
