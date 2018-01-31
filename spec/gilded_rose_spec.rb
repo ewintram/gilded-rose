@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), '../lib/gilded_rose')
 describe GildedRose do
 
   let(:items)                 { [RegularItem.new("foo", 1, 2)] }
-  let(:sulfuras)              { [Item.new("Sulfuras, Hand of Ragnaros", 0, 80)] }
+  let(:sulfuras)              { [Sulfuras.new("Sulfuras, Hand of Ragnaros", 0, 80)] }
 
   describe "#update_quality" do
 

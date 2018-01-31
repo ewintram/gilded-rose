@@ -10,17 +10,24 @@ class GildedRose
 
   def update_quality()
     @items.each do |item|
-      case item.name
-        when "Sulfuras, Hand of Ragnaros"
-          return
-        when "foo"
-          item.update_quality
-        when "Aged Brie"
-          item.update_quality
-        when "Backstage passes"
-          item.update_quality
-      end
+      item.update_quality
     end
+  end
+end
+
+###
+
+class Sulfuras
+  attr_accessor :name, :sell_in, :quality
+
+  def initialize(name, sell_in, quality)
+    @name = name
+    @sell_in = sell_in
+    @quality = quality
+  end
+
+  def update_quality
+    return
   end
 end
 
@@ -114,16 +121,16 @@ end
 
 ###
 
-class Item
-  attr_accessor :name, :sell_in, :quality
-
-  def initialize(name, sell_in, quality)
-    @name = name
-    @sell_in = sell_in
-    @quality = quality
-  end
-
-  def to_s()
-    "#{@name}, #{@sell_in}, #{@quality}"
-  end
-end
+# class Item
+#   attr_accessor :name, :sell_in, :quality
+#
+#   def initialize(name, sell_in, quality)
+#     @name = name
+#     @sell_in = sell_in
+#     @quality = quality
+#   end
+#
+#   def to_s()
+#     "#{@name}, #{@sell_in}, #{@quality}"
+#   end
+# end
